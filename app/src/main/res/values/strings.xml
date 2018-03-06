@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">ChangeYourVoice</string>
+    <string name="app_name">Change your voice</string>
+    <string name="btn_record">Record</string>
+    <string name="btn_stop">Stop</string>
+    <string name="permission_dialog_text">This app needs some permissions to work with audio files. You should accept them by tapping next.</string>
+    <string name="permission_dialog_accept">Next</string>
+    <string name="permission_dialog_cancel">Exit</string>
 </resources>
