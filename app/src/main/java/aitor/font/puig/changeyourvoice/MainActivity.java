@@ -1,12 +1,15 @@
 package aitor.font.puig.changeyourvoice;
 
 import android.content.pm.PackageManager;
+import android.media.MediaRecorder;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.util.Log;
+import android.widget.Button;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,22 +23,27 @@ public class MainActivity extends AppCompatActivity {
 
     Boolean folderCreated = true, audioFileCreated = true;
 
+    Button btn_record, btn_stop;
+
+    MediaRecorder myAudioRecorder = new MediaRecorder();
+    File audioFolder, audioFile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         if(checkPermission()) {
-            File newFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC) + "/ChangeYourVoice/");
-            if(!newFolder.exists()) {
-                folderCreated = newFolder.mkdir();
+            audioFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC) + "/ChangeYourVoice/");
+            if(!audioFolder.exists()) {
+                folderCreated = audioFolder.mkdir();
             }
 
             if(folderCreated) {
-                File newAudioFile = new File(newFolder.getAbsolutePath() + "/audioFile.mp3");
-                if(!newAudioFile.exists()) {
+                audioFile = new File(audioFolder.getAbsolutePath() + "/audioFile.mp3");
+                if(!audioFile.exists()) {
                     try {
-                        audioFileCreated = newAudioFile.createNewFile();
+                        audioFileCreated = audioFile.createNewFile();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -47,39 +55,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private void requestPermission() {
         ActivityCompat.requestPermissions(MainActivity.this, new
                 String[]{WRITE_EXTERNAL_STORAGE, RECORD_AUDIO}, RequestPermissionCode);
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case RequestPermissionCode:
-                if (grantResults.length> 0) {
-                    boolean StoragePermission = grantResults[0] ==
-                            PackageManager.PERMISSION_GRANTED;
-                    boolean RecordPermission = grantResults[1] ==
-                            PackageManager.PERMISSION_GRANTED;
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
 
-                    if (StoragePermission && RecordPermission) {
-                        Toast.makeText(MainActivity.this, "Permission Granted",
-                                Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(MainActivity.this,"Permission Denied",Toast.LENGTH_LONG).show();
-                    }
-                }
-                break;
-        }
     }
 
     public boolean checkPermission() {
-        int result = ContextCompat.checkSelfPermission(getApplicationContext(),
-                WRITE_EXTERNAL_STORAGE);
-        int result1 = ContextCompat.checkSelfPermission(getApplicationContext(),
-                RECORD_AUDIO);
-        return result == PackageManager.PERMISSION_GRANTED &&
-                result1 == PackageManager.PERMISSION_GRANTED;
+        int result = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
+        int result1 = ContextCompat.checkSelfPermission(getApplicationContext(), RECORD_AUDIO);
+        return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void startRecording() {
+
+    }
+
+    private void stopRecording() {
+
     }
 }

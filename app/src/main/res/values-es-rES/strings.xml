@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cambia tu voz</string>
+    <string name="btn_record">Grabar</string>
+    <string name="btn_stop">Parar</string>
+    <string name="permission_dialog_text">Esta app necesita algunos permisos para trabajar con los ficheros de audio. Deberías aceptarlos apretando en siguiente.</string>
+    <string name="permission_dialog_accept">Siguiente</string>
+    <string name="permission_dialog_cancel">Salir</string>
+</resources>
