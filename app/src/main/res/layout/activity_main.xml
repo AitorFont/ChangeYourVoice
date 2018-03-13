@@ -6,27 +6,17 @@
     android:layout_height="match_parent"
     tools:context="aitor.font.puig.changeyourvoice.MainActivity">
 
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:id="@+id/audioList"
+        android:layout_above="@+id/btn_record" />
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:weightSum="2">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/btn_record"
-            android:text="@string/btn_record"/>
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/btn_stop"
-            android:text="@string/btn_stop"
-            android:enabled="false"/>
-
-    </LinearLayout>
+        android:id="@+id/btn_record"/>
 
 </RelativeLayout>
