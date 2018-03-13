@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private Boolean folderCreated = true;
 
     private RecyclerView audioList;
+    private TextView tv_empty;
+
     private File audioFolder;
     private List<AudioFileClass> list;
 
@@ -54,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        tv_empty = findViewById(R.id.tv_empty);
+
         audioList = findViewById(R.id.audioList);
         audioList.setHasFixedSize(true);
 
@@ -69,11 +74,16 @@ public class MainActivity extends AppCompatActivity {
             for (File file : files) {
                 list.add(new AudioFileClass(file.getName()));
             }
+
+            if (files.length > 0) tv_empty.setVisibility(View.GONE);
+            else tv_empty.setVisibility(View.VISIBLE);
         }
     }
 
     private void setAudioList() {
-        AudioAdapter adapter = new AudioAdapter(list);
-        audioList.setAdapter(adapter);
+        if (list.size() > 0) {
+            AudioAdapter adapter = new AudioAdapter(list);
+            audioList.setAdapter(adapter);
+        }
     }
 }

@@ -7,5 +7,6 @@
     <string name="permission_dialog_accept">Siguiente</string>
     <string name="permission_dialog_cancel">Salir</string>
 
-    <string name="btn_new_audio">Nuevo Audio</string>
+    <string name="btn_new_audio">Nuevo audio</string>
+    <string name="no_data_available">No hay datos</string>
 </resources>

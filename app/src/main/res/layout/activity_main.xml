@@ -13,6 +13,15 @@
         android:id="@+id/audioList"
         android:layout_above="@+id/btn_record" />
 
+    <TextView
+        android:id="@+id/tv_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="@string/no_data_available"
+        android:layout_above="@+id/btn_record"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
