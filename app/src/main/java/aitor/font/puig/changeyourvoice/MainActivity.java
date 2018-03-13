@@ -1,28 +1,26 @@
 package aitor.font.puig.changeyourvoice;
 
-import android.content.pm.PackageManager;
-import android.media.MediaRecorder;
+import android.content.Intent;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    Boolean folderCreated = true, audioFileCreated = true;
+    private Boolean folderCreated = true;
 
-    Button btn_record, btn_stop;
-
-    MediaRecorder audioRecorder;
-    File audioFolder, audioFile;
+    private RecyclerView audioList;
+    private File audioFolder;
+    private List<AudioFileClass> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,63 +33,47 @@ public class MainActivity extends AppCompatActivity {
             folderCreated = audioFolder.mkdir();
         }
 
-        prepareAudioRecorder();
         prepareInterface();
     }
 
-    private void prepareAudioRecorder() {
-        audioRecorder = new MediaRecorder();
-        audioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        audioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        audioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        initializeData();
+        setAudioList();
     }
 
     private void prepareInterface() {
-        btn_record = findViewById(R.id.btn_record);
-        btn_stop = findViewById(R.id.btn_stop);
-
+        Button btn_record = findViewById(R.id.btn_record);
         btn_record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_record.setEnabled(false);
-                startRecording();
-                btn_stop.setEnabled(true);
+                Intent intent = new Intent(MainActivity.this, RecordAudioActivity.class);
+                startActivity(intent);
             }
         });
-        btn_stop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btn_stop.setEnabled(false);
-                stopRecording();
-                btn_record.setEnabled(true);
-            }
-        });
+
+        audioList = findViewById(R.id.audioList);
+        audioList.setHasFixedSize(true);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        audioList.setLayoutManager(llm);
     }
 
-    private void startRecording() {
+    private void initializeData(){
+        list = new ArrayList<>();
         if(folderCreated) {
-            audioFile = new File(audioFolder.getAbsolutePath() + "/audioFile.mp3");
-            if(!audioFile.exists()) {
-                try {
-                    audioFileCreated = audioFile.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+            File[] files = audioFolder.listFiles();
 
-        if(audioFileCreated) {
-            audioRecorder.setOutputFile(audioFile.getAbsolutePath());
-            try {
-                audioRecorder.prepare();
-                audioRecorder.start();
-            } catch (IOException e) {
-                e.printStackTrace();
+            for (File file : files) {
+                list.add(new AudioFileClass(file.getName()));
             }
         }
     }
 
-    private void stopRecording() {
-        audioRecorder.stop();
+    private void setAudioList() {
+        AudioAdapter adapter = new AudioAdapter(list);
+        audioList.setAdapter(adapter);
     }
 }
