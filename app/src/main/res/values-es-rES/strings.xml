@@ -9,4 +9,7 @@
 
     <string name="btn_new_audio">Nuevo audio</string>
     <string name="no_data_available">No hay datos</string>
+
+    <string name="audio_title">Título: </string>
+    <string name="audio_created">El audio ha sido creado</string>
 </resources>
