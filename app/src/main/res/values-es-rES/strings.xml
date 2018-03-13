@@ -6,4 +6,10 @@
     <string name="permission_dialog_text">Esta app necesita algunos permisos para trabajar con los ficheros de audio. Deberías aceptarlos apretando en siguiente.</string>
     <string name="permission_dialog_accept">Siguiente</string>
     <string name="permission_dialog_cancel">Salir</string>
+
+    <string name="btn_new_audio">Nuevo audio</string>
+    <string name="no_data_available">No hay datos</string>
+
+    <string name="audio_title">Título: </string>
+    <string name="audio_created">El audio ha sido creado</string>
 </resources>

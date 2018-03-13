@@ -5,4 +5,10 @@
     <string name="permission_dialog_text">This app needs some permissions to work with audio files. You should accept them by tapping next.</string>
     <string name="permission_dialog_accept">Next</string>
     <string name="permission_dialog_cancel">Exit</string>
+
+    <string name="btn_new_audio">New audio</string>
+    <string name="no_data_available">No data available</string>
+
+    <string name="audio_title">Title: </string>
+    <string name="audio_created">The audio has been created</string>
 </resources>

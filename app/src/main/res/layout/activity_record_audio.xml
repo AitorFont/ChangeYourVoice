@@ -7,7 +7,7 @@
     tools:context="aitor.font.puig.changeyourvoice.RecordAudioActivity">
 
     <LinearLayout
-        android:id="@+id/ll_bottom"
+        android:id="@+id/ll_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -29,5 +29,24 @@
             android:enabled="false"/>
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_top"
+        android:id="@+id/tv_title"
+        android:text="@string/audio_title"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_marginTop="10dp"
+        android:id="@+id/et_title"
+        android:textSize="22sp"
+        android:inputType="text" />
 
 </RelativeLayout>
