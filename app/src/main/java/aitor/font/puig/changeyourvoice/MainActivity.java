@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void prepareInterface() {
-        Button btn_record = findViewById(R.id.btn_record);
-        btn_record.setOnClickListener(new View.OnClickListener() {
+        Button btn_newAudio = findViewById(R.id.btn_record);
+        btn_newAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, RecordAudioActivity.class);
