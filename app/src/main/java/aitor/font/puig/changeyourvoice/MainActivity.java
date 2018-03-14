@@ -19,8 +19,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Boolean folderCreated = true;
-
     private RecyclerView audioList;
     private TextView tv_empty;
 
@@ -32,11 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Taking music folder reference
-        audioFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC) + "/ChangeYourVoice/");
-        if(!audioFolder.exists()) {
-            folderCreated = audioFolder.mkdir();
-        }
+        audioFolder = FileManager.getInstance().getAudioFolder();
 
         prepareInterface();
     }
@@ -70,24 +64,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeData(){
         list = new ArrayList<>();
-        if(folderCreated) {
-            File[] files = audioFolder.listFiles();
-            Arrays.sort(files, new Comparator<File>() {
-                @Override
-                public int compare(File file1, File file2) {
-                    if (file1.lastModified() < file2.lastModified()) return 1;
-                    else if(file1.lastModified() > file2.lastModified()) return -1;
-                    else return 0;
-                }
-            });
 
-            for (File file : files) {
-                list.add(new AudioFileClass(file.getName()));
+        File[] files = audioFolder.listFiles();
+        Arrays.sort(files, new Comparator<File>() {
+            @Override
+            public int compare(File file1, File file2) {
+                if (file1.lastModified() < file2.lastModified()) return 1;
+                else if(file1.lastModified() > file2.lastModified()) return -1;
+                else return 0;
             }
+        });
 
-            if (files.length > 0) tv_empty.setVisibility(View.GONE);
-            else tv_empty.setVisibility(View.VISIBLE);
+        for (File file : files) {
+            list.add(new AudioFileClass(file.getName()));
         }
+
+        if (files.length > 0) tv_empty.setVisibility(View.GONE);
+        else tv_empty.setVisibility(View.VISIBLE);
     }
 
     private void setAudioList() {
@@ -95,7 +88,9 @@ public class MainActivity extends AppCompatActivity {
             audioList.setAdapter(new AudioAdapter(list, new AudioAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(AudioFileClass item) {
-
+                    Intent intent = new Intent(MainActivity.this, AudioModifierActivity.class);
+                    intent.putExtra("fileName", item.getAudioTitle());
+                    startActivity(intent);
                 }
             }));
         }
