@@ -17,25 +17,19 @@ import java.io.IOException;
 
 public class RecordAudioActivity extends AppCompatActivity {
 
-    Boolean folderCreated = true, audioFileCreated = true;
     String title = "AudioFile";
 
     Button btn_record, btn_stop;
     EditText et_title;
 
     MediaRecorder audioRecorder;
-    File audioFolder, audioFile;
+    File audioFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_audio);
 
-        // Taking music folder reference
-        audioFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC) + "/ChangeYourVoice/");
-        if(!audioFolder.exists()) {
-            folderCreated = audioFolder.mkdir();
-        }
         prepareInterface();
     }
 
@@ -82,26 +76,15 @@ public class RecordAudioActivity extends AppCompatActivity {
     }
 
     private void startRecording() {
-        if(folderCreated) {
-            audioFile = new File(audioFolder.getAbsolutePath() + "/" + title + ".mp3");
-            if(!audioFile.exists()) {
-                try {
-                    audioFileCreated = audioFile.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        audioFile = FileManager.getInstance().getAudioFile(title);
 
-        if(audioFileCreated) {
-            prepareAudioRecorder();
-            audioRecorder.setOutputFile(audioFile.getAbsolutePath());
-            try {
-                audioRecorder.prepare();
-                audioRecorder.start();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        prepareAudioRecorder();
+        audioRecorder.setOutputFile(audioFile.getAbsolutePath());
+        try {
+            audioRecorder.prepare();
+            audioRecorder.start();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

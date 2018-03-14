@@ -14,10 +14,16 @@ import java.util.List;
 
 public class AudioAdapter extends RecyclerView.Adapter<AudioAdapter.AudioHolder> {
 
-    private List<AudioFileClass> audioList;
+    public interface OnItemClickListener {
+        void onItemClick(AudioFileClass item);
+    }
 
-    public AudioAdapter(List<AudioFileClass> list) {
-        audioList = list;
+    private final List<AudioFileClass> audioList;
+    private final OnItemClickListener listener;
+
+    AudioAdapter(List<AudioFileClass> list, OnItemClickListener listener) {
+        this.audioList = list;
+        this.listener = listener;
     }
 
     @Override
@@ -28,7 +34,7 @@ public class AudioAdapter extends RecyclerView.Adapter<AudioAdapter.AudioHolder>
 
     @Override
     public void onBindViewHolder(AudioHolder holder, int position) {
-        holder.tv_title.setText(audioList.get(position).getAudioTitle());
+        holder.bind(audioList.get(position), listener);
     }
 
     @Override
@@ -48,6 +54,16 @@ public class AudioAdapter extends RecyclerView.Adapter<AudioAdapter.AudioHolder>
         AudioHolder(View itemView) {
             super(itemView);
             tv_title = itemView.findViewById(R.id.audioTitle);
+        }
+
+        void bind(final AudioFileClass item, final OnItemClickListener listener) {
+            tv_title.setText(item.getAudioTitle());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClick(item);
+                }
+            });
         }
     }
 }
