@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -70,6 +72,14 @@ public class MainActivity extends AppCompatActivity {
         list = new ArrayList<>();
         if(folderCreated) {
             File[] files = audioFolder.listFiles();
+            Arrays.sort(files, new Comparator<File>() {
+                @Override
+                public int compare(File file1, File file2) {
+                    if (file1.lastModified() < file2.lastModified()) return 1;
+                    else if(file1.lastModified() > file2.lastModified()) return -1;
+                    else return 0;
+                }
+            });
 
             for (File file : files) {
                 list.add(new AudioFileClass(file.getName()));
