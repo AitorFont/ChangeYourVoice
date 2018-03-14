@@ -92,8 +92,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void setAudioList() {
         if (list.size() > 0) {
-            AudioAdapter adapter = new AudioAdapter(list);
-            audioList.setAdapter(adapter);
+            audioList.setAdapter(new AudioAdapter(list, new AudioAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(AudioFileClass item) {
+
+                }
+            }));
         }
     }
 }
