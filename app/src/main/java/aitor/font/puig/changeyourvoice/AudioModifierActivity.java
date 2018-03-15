@@ -6,15 +6,16 @@ import android.util.Log;
 
 public class AudioModifierActivity extends AppCompatActivity {
 
-    private String fileName;
+    private ChangeYourVoiceJNI changeYourVoiceJNI = ChangeYourVoiceJNI.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio_modifier);
 
-        fileName = getIntent().getStringExtra("fileName");
+        String fileName = getIntent().getStringExtra("fileName");
+        String hello = changeYourVoiceJNI.getStringFromJNI();
 
-        Log.d("HOLA", fileName);
+        Log.d("HOLA", fileName + " - " + hello);
     }
 }
