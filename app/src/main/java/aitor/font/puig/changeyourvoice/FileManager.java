@@ -41,6 +41,15 @@ class FileManager {
 
         File audioFile = new File(audioFolder.getAbsolutePath() + "/" + fileName + ".mp3");
 
+        if(audioFile.exists()) return audioFile;
+        else return null;
+    }
+
+    File createAudioFile(String fileName) {
+        if(audioFolder == null || !audioFolderCreated) createAudioFolder();
+
+        File audioFile = new File(audioFolder.getAbsolutePath() + "/" + fileName + ".mp3");
+
         if(audioFile.exists()) audioFile.delete();
         try {
             audioFile.createNewFile();

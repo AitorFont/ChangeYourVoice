@@ -76,7 +76,7 @@ public class RecordAudioActivity extends AppCompatActivity {
     }
 
     private void startRecording() {
-        audioFile = FileManager.getInstance().getAudioFile(title);
+        audioFile = FileManager.getInstance().createAudioFile(title);
 
         prepareAudioRecorder();
         audioRecorder.setOutputFile(audioFile.getAbsolutePath());
